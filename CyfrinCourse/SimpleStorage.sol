@@ -12,7 +12,7 @@ contract SimpleStorage {
     Person[] public people;
     mapping(string => Person) peopleByName;
 
-    function store(int number) public {
+    function store(int number) public virtual {
         favouriteNumber = number;
     }
 
