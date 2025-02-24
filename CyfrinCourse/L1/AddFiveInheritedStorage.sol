@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.28;
 
-import {SimpleStorage} from "CyfrinCourse/SimpleStorage.sol";
+import {SimpleStorage} from "CyfrinCourse/L1/SimpleStorage.sol";
 
 contract AddFiveStorage is SimpleStorage {
 
