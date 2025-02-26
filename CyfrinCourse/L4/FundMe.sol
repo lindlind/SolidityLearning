@@ -14,6 +14,8 @@ v, r, s -- for cryptography
 
 import {CurrencyConverter} from "./CurrencyConverter.sol";
 
+error NotOwner();
+
 contract FundMe {
     using CurrencyConverter for uint256;
 
@@ -22,7 +24,7 @@ contract FundMe {
     address[] funders;
     mapping(address => uint256) funded;
 
-    address owner;
+    address immutable owner;
 
     constructor() {
         owner = msg.sender;
@@ -71,8 +73,26 @@ contract FundMe {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Permission denied: owner required");
-        _;
+        // usual way
+        //
+        // require(msg.sender == owner, "Permission denied: owner required");
+
+        // cheaper way
+        if (msg.sender != owner) {
+            revert NotOwner();
+        }
+
+        _; // rest of the function
+    }
+
+    // for directly sended value
+    receive() external payable {
+        fund();
+    }
+
+    // for undefined function called
+    fallback() external payable { 
+        fund();
     }
 
 }
